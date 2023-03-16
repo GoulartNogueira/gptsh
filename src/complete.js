@@ -7,7 +7,7 @@ const axios = require('axios')
 //--- Create an axios instance to query to.
 const openai = axios.create({
 	baseURL: 'https://api.openai.com/v1',
-	headers: {'Content-Type': 'application/json'}
+	headers: { 'Content-Type': 'application/json' }
 })
 
 module.exports = async (prompt, config = {}) => {
@@ -26,7 +26,7 @@ module.exports = async (prompt, config = {}) => {
 	openai.defaults.headers.common['Authorization'] = `Bearer ${secret}`
 
 	//--- Query the GPT-3 API.
-	return await openai.post(`/engines/${engineId}/completions`, {prompt, ...options})
+	return await openai.post(`/engines/${engineId}/completions`, { prompt, ...options })
 		.then(res => map(res.data.choices, 'text'))
 		.catch(err => console.error(err.response.data.error.message || err.message))
 }

@@ -9,7 +9,7 @@ const promptTemplate = requireText('../data/promptTemplate.txt')
 
 module.exports = (input, options = {}) => {
 
-    switch(options.platform){
+    switch (options.platform) {
         case 'aix': input += ' on IBM AIX'; break;
         case 'linux': input += ' on Linux'; break;
         case 'darwin': input += ' on Apple OSX'; break;
