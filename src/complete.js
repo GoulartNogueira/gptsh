@@ -28,5 +28,5 @@ module.exports = async (prompt, config = {}) => {
 	//--- Query the GPT-3 API.
 	return await openai.post(`/engines/${engineId}/completions`, { prompt, ...options })
 		.then(res => map(res.data.choices, 'text'))
-		.catch(err => console.error(err.response.data.error.message || err.message))
+		.catch(err => console.error(err.response.data.error || err.message || err))
 }
