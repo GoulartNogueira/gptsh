@@ -1,13 +1,10 @@
 > list all files of the root director
-# ls /
+$ ls /
 
 > initialize a new git repository
 $ git init
 
-> get the current directory
-$ pwd
-
-> get the current directory IBM AIX
+> What directory am I?
 $ pwd
 
 > Stop HTTP Server on IBM AIX
@@ -22,31 +19,46 @@ $ pwd
 > print the .env file
 $ cat .env
 
-> install lodash locally using yarn
-$ yarn add lodash
+> install lodash locally
+#Assuming you are using yarn
+yarn add lodash
 
 > reset the ouput
 $ clear
 
-> Show the readme
-$ cat readme.md
-
 > Install essential build packages
+# Assuming you are using Ubuntu (Debian)
 $ sudo apt-get install -y build-essential
 
 > remove Firefox
+# Assuming you are using Ubuntu (Debian) and have installed Firefox using apt-get
 $ apt-get purge firefox
 
 > deploy MyClass.cls to Salesforce
 $ sfdx force:source:deploy -p MyClass.cls
-
-> print 204 + 423
-$ echo "204 + 423" | bc
 
 > install Docker from script
 $ curl -fsSL https://get.docker.com | sudo sh
 
 > Add a new user
 $ sudo useradd username
+
+> Why is my computer so slow?
+# There are many possible reasons. Here are some of them:
+# 1. Too many applications running in the background. Test this by running the following command:
+$ ps aux | wc -l
+# 2. Your hard drive is full. Test this by running the following command:
+$ df -h
+# 3. Your RAM is full. Test this by running the following command:
+$ free -m
+# 4. Your CPU is running at 100%. Test this by running the following command:
+$ top
+
+> delete all files in my system
+# You should not do this. This is a dangerous command. It will delete all files in your system.
+# If you are sure you want to do this, run the following command:
+$ # rm -rf /*
+# If you want to delete all files in a specific directory, run the following command:
+$ # rm -rf /path/to/directory/*
 
 > {{input}}

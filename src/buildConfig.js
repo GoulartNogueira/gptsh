@@ -8,15 +8,15 @@ const { name: appName } = require('../package.json');
 //--- Build the default options.
 const defaultOptions = {
     secret: null,
-    engineId: 'davinci',
-    max_tokens: 100,
+    engineId: 'code-davinci-002',
+    max_tokens: 300,
     temperature: 0.0,
     top_p: undefined,
     n: undefined,
     stream: undefined,
     logprobs: undefined,
     echo: false,
-    stop: '\n',
+    stop: '\n>',
     presence_penalty: undefined,
     frequency_penalty: undefined,
     best_of: undefined,

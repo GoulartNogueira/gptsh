@@ -40,6 +40,9 @@ const prompt = buildPrompt(argv._.join(' '), appConfig)
 
 //--- Compute the apporpirate shell command and output it.
 complete(prompt, appConfig).then(outputs => {
-	for(output of uniq(outputs))
-		console.log(output.replace('$ ', ''))
+	// replace '$ ' if it is at the beginning of a line
+	const result = outputs[0].replace(/^\$ /gm, '')
+	console.log(result)
+	// close the process
+	process.exit(0)
 })
