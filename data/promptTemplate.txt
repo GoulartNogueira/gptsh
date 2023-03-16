@@ -1,19 +1,16 @@
-> list all files of the root director
+> [linux] list all files of the root director
 $ ls /
 
 > initialize a new git repository
 $ git init
 
-> What directory am I?
-$ pwd
-
-> Stop HTTP Server on IBM AIX
+> [aix] Stop HTTP Server on IBM AIX
 $ /usr/IBM/HTTPServer/bin/apachectl stop
 
-> Show hidden files in Finder on Apple OSX
+> [darwin] Show hidden files in Finder
 $ defaults write com.apple.finder AppleShowAllFiles TRUE
 
-> get the current directory Apple OSX
+> [darwin] get the current directory Apple OSX
 $ pwd
 
 > print the .env file
@@ -26,7 +23,7 @@ yarn add lodash
 > reset the ouput
 $ clear
 
-> Install essential build packages
+> [linux] Install essential build packages
 # Assuming you are using Ubuntu (Debian)
 $ sudo apt-get install -y build-essential
 
@@ -43,7 +40,7 @@ $ curl -fsSL https://get.docker.com | sudo sh
 > Add a new user
 $ sudo useradd username
 
-> Why is my computer so slow?
+> [linux] Why is my computer so slow?
 # There are many possible reasons. Here are some of them:
 # 1. Too many applications running in the background. Test this by running the following command:
 $ ps aux | wc -l
