@@ -3,7 +3,6 @@
 //--- Import dependencies.
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
-const uniq = require('lodash/uniq')
 const complete = require('./complete')
 const buildConfig = require('./buildConfig')
 const buildPrompt = require('./buildPrompt')
@@ -11,7 +10,7 @@ const buildPrompt = require('./buildPrompt')
 //--- Parse argv arguments using 'yargs' package.
 const argv = yargs(hideBin(process.argv))
 	.usage('Usage: $0 <input> [options]')
-	.example('$0 List all files of this directory | bash')
+	.example('$0 "What is the command to list all files of this directory? --ask false | bash')
 	.example('$0 Install the lodash package --secret <YOUR_SECRET_KEY> | bash')
 	.example('$0 Delete the root directory --engine ada')
 	.example('$0 Add remote from github with name shorwood/gptsh --max-tokens 32')
@@ -21,6 +20,10 @@ const argv = yargs(hideBin(process.argv))
 	.option('temperature', { type: 'number', description: 'Higher values means the model will take more risks', default: 0.0 })
 	.option('platform', { type: 'string', alias: 'p', description: 'Platform of the command to output' })
 	.option('n', { type: 'number', description: 'Number of completions to generate' })
+	// option to offer to run the command
+	.option('ask', { type: 'boolean', alias: 'a', description: 'Ask if the user wants to run the command', default: true })
+	// option to run the command without asking (CAUTION: dangerous)
+	.option('force', { type: 'boolean', alias: 'f', description: 'CAUTION: Run the command without asking', default: false })
 	.demandCommand()
 	.help()
 	.argv
@@ -46,9 +49,20 @@ complete(prompt, appConfig).then(outputs => {
 		process.exit(1)
 	}
 	// replace '$ ' if it is at the beginning of a line
-	const result = outputs[0].replace(/^\$ /gm, '')
+	let result = outputs[0].replace(/^\$ /gm, '')
+	// remove the last line, if it is empty
+	if (result.endsWith('\n')) {
+		result = result.slice(0, -1)
+	}
 	console.log(result)
-	askRunCommand(result)
+	if (argv.ask) {
+		// ask the user if they want to run the command
+		askRunCommand(result)
+	}
+	if (argv.force) {
+		// run the command without asking
+		runCommand(result)
+	}
 })
 
 //--- Offer to run the command. If the user accepts, run it.
@@ -58,6 +72,15 @@ function askRunCommand(command) {
 		input: process.stdin,
 		output: process.stdout
 	})
+	
+	// TODO
+	// if all lines start with #, then theres nothing to be run.
+	if (command.split('\n').every(line => line.startsWith('#'))) {
+		// console.log('No command to run.')
+		// terminate the program
+		process.exit(0)
+	}
+
 	const question = 'Run command? [Y/n] '
 	readline.question(question, answer => {
 		if (answer === '' || answer.toLowerCase() === 'y') {
@@ -67,15 +90,19 @@ function askRunCommand(command) {
 			console.log('Running...')
 
 			// run the command
-			const { exec } = require('child_process')
-			exec(command, (err, stdout, stderr) => {
-				if (err) {
-					console.error(err)
-					return
-				}
-				console.log(stdout)
-			})
+			runCommand(command)
 		}
 		readline.close()
+	})
+}
+
+function runCommand(command) {
+	const { exec } = require('child_process')
+	exec(command, (err, stdout, stderr) => {
+		if (err) {
+			console.error(err)
+			return
+		}
+		console.log(stdout)
 	})
 }
