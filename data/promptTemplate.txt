@@ -61,4 +61,7 @@ $ # rm -rf /*
 # If you want to delete all files in a specific directory, run the following command:
 $ # rm -rf /path/to/directory/*
 
+> I started ./main.sh and it keeps loading. How can I stop it?
+# Press Ctrl+C to stop the script.
+
 > {{input}}
