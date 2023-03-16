@@ -40,9 +40,42 @@ const prompt = buildPrompt(argv._.join(' '), appConfig)
 
 //--- Compute the apporpirate shell command and output it.
 complete(prompt, appConfig).then(outputs => {
+	// Check if the output is undefined.
+	if (outputs === undefined) {
+		console.error('No output was returned.')
+		process.exit(1)
+	}
 	// replace '$ ' if it is at the beginning of a line
 	const result = outputs[0].replace(/^\$ /gm, '')
 	console.log(result)
-	// close the process
-	process.exit(0)
+	askRunCommand(result)
 })
+
+//--- Offer to run the command. If the user accepts, run it.
+function askRunCommand(command) {
+	// Asks if the user wants to run the command.
+	const readline = require('readline').createInterface({
+		input: process.stdin,
+		output: process.stdout
+	})
+	const question = 'Run command? [Y/n] '
+	readline.question(question, answer => {
+		if (answer === '' || answer.toLowerCase() === 'y') {
+			// remove the last line printed
+			process.stdout.moveCursor(0, -1)
+			process.stdout.clearLine()
+			console.log('Running...')
+
+			// run the command
+			const { exec } = require('child_process')
+			exec(command, (err, stdout, stderr) => {
+				if (err) {
+					console.error(err)
+					return
+				}
+				console.log(stdout)
+			})
+		}
+		readline.close()
+	})
+}
