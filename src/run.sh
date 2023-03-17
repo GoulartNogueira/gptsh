@@ -13,22 +13,45 @@ command="$(dirname "$0")/index.js --ask false $@"
 result="$(eval "$command")" || exit 1
 
 # 2. Show the command to the user.
-echo "$result"
+# Split the string into lines and print each line separately.
+while IFS= read -r line; do
+    # If the line starts with #, print it in gray.
+    if [[ $line == \#* ]];then
+        echo -e "\e[90m$line\e[0m"
+    else
+    # Otherwise, print in green.
+        echo -e "\e[32m$line\e[0m"
+    fi
+done <<< "$result"
 
 # 3. Offer to run the command.
 
 # if all lines start with #, then don't run the command
 if [ -z "$(echo "$result" | grep -v '^#')" ];then
     # echo "All lines start with #, so not running the command."
+    echo
     exit 0
 fi
 
-read -p "Run command? [Y/n] " -n 1 -r response
+echo
+read -p "↑ Run? [Y/n] " -n 1 -r response
 if [[ $response =~ ^[Yy]$ ]];then
-    echo "Running..."
+    # move the cursor to the beginning of the line
+    echo -en "\r"
+    echo -e "\e[90mRunning...      \e[0m"
+    # log both the command and the result
+    # echo "$command" >> ./gpt.log
+    # echo "$result" >> ./gpt.log
+    
     eval "$result"
+    # run the command, but keep the output with the correct formatting
+    # eval "$result" | while IFS= read -r line; do
+    #     echo -e "$line"
+    #     # echo -e "$line" >> ./gpt.log
+    # done
 else
     # echo "Not running."
+    echo
     exit 0
 fi
 
