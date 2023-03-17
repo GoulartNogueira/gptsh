@@ -41,7 +41,7 @@ const appConfig = buildConfig({
 //--- Build the prompt string.
 const prompt = buildPrompt(argv._.join(' '), appConfig)
 
-//--- Compute the apporpirate shell command and output it.
+//--- Compute the appropriate shell command and output it.
 complete(prompt, appConfig).then(outputs => {
 	// Check if the output is undefined.
 	if (outputs === undefined) {
@@ -68,11 +68,6 @@ complete(prompt, appConfig).then(outputs => {
 //--- Offer to run the command. If the user accepts, run it.
 function askRunCommand(command) {
 	// Asks if the user wants to run the command.
-	const readline = require('readline').createInterface({
-		input: process.stdin,
-		output: process.stdout
-	})
-	
 	// TODO
 	// if all lines start with #, then theres nothing to be run.
 	if (command.split('\n').every(line => line.startsWith('#'))) {
@@ -81,19 +76,25 @@ function askRunCommand(command) {
 		process.exit(0)
 	}
 
-	const question = 'Run command? [Y/n] '
-	readline.question(question, answer => {
-		if (answer === '' || answer.toLowerCase() === 'y') {
+	const prompts = require('prompts');
+	(async () => {
+		const response = await prompts({
+			type: 'confirm',
+			name: 'value',
+			message: 'Run command?',
+			initial: true
+		});
+		if (response.value) {
 			// remove the last line printed
-			process.stdout.moveCursor(0, -1)
-			process.stdout.clearLine()
-			console.log('Running...')
+			// process.stdout.moveCursor(0, -1)
+			// process.stdout.clearLine()
+			// console.log('Running...')
 
 			// run the command
 			runCommand(command)
 		}
-		readline.close()
-	})
+	}
+	)()
 }
 
 function runCommand(command) {

@@ -35,7 +35,7 @@ npm install --global gpterminal
 ```bash
 yarn global add gpterminal
 ```
-
+<!-- 
 Or you can run the `goulartnogueira/gptsh` docker image like so.
 ```bash
 docker run --rm -e OPENAI_SECRET_KEY goulartnogueira/gptsh <input>
@@ -49,7 +49,7 @@ And while you're at it, alias that command for quick use
 $ alias gpt='docker run --rm -e OPENAI_SECRET_KEY goulartnogueira/gptsh'
 $ gpt Reset Nginx
 sudo service nginx restart
-```
+``` -->
 
 ## • Getting started
 To use this tool, you will need to set [OpenAI API key](https://beta.openai.com/) either as an environment variable.
@@ -63,7 +63,8 @@ As a option while executing the command.
 gpt <input> --secret <YOUR_SECRET_KEY>
 ```
 
-Or in the `~/.gptshrc` config file placed in your home directory.
+<!-- ~/.appname+rc -->
+Or in the `~/.gpterminalrc` file.
 ```ini
 secret=sk-**************
 engine=engine=code-davinci-002
