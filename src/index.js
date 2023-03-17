@@ -63,7 +63,28 @@ complete(prompt, appConfig).then(outputs => {
 		// run the command without asking
 		runCommand(result)
 	}
-})
+}).
+	catch(err => {
+		console.error(err.message)
+		// import and run getSecret() from ./complete.js
+
+		// get the secret from the user
+		const getSecret = require('./complete')
+		//   code: 'invalid_api_key'
+		if (err.code === 'invalid_api_key') {
+			getSecret().then(secret => {
+				console.log("Ok, got the secret. You can now run the command again.")
+			})
+				.finally(() => {
+					// terminate the program
+					process.exit(0)
+				})
+		}
+		else {
+			console.error(err)
+			process.exit(1)
+		}
+	})
 
 //--- Offer to run the command. If the user accepts, run it.
 function askRunCommand(command) {
