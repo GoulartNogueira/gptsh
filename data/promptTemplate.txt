@@ -10,35 +10,36 @@ $ /usr/IBM/HTTPServer/bin/apachectl stop
 > [darwin] Show hidden files in Finder
 $ defaults write com.apple.finder AppleShowAllFiles TRUE
 
-> [darwin] get the current directory Apple OSX
-$ pwd
+> How to insert a new variable in the .env? Complete noob explanation, please.
+# Assuming you are already in the project directory.
+# First, add the new variable to the .env file:
+$ echo "\nMY_VAR=123" >> .env
+# Then you can check the new variable by running the following command:
+$ tail -n 1 .env
+# Finally, restart the server to load the new variable.
 
-> print the .env file
-$ cat .env
-
-> install lodash locally
-#Assuming you are using yarn
-yarn add lodash
-
-> reset the ouput
+> [linux] please reset this screen
 $ clear
 
 > [linux] Install essential build packages
 # Assuming you are using Ubuntu (Debian)
 $ sudo apt-get install -y build-essential
 
-> remove Firefox
+> [linux] remove Firefox
 # Assuming you are using Ubuntu (Debian) and have installed Firefox using apt-get
 $ apt-get purge firefox
+
+> [linux] how to print the unformated text "\e[31mtext\e[0m" in the terminal, but without evaluating it? I mean, just show this string, without formatting it red
+$ echo -e "\e[31mtext\e[0m"
+# This will print the string "text" in red.
+# But if you want to print the string unformated, showing the escape characters instead of evaluating them, you can use the following command:
+$ echo -e "\e[31mtext\e[0m" | sed 's/\\e\[[0-9;]*m//g'
 
 > deploy MyClass.cls to Salesforce
 $ sfdx force:source:deploy -p MyClass.cls
 
 > install Docker from script
 $ curl -fsSL https://get.docker.com | sudo sh
-
-> Add a new user
-$ sudo useradd username
 
 > [linux] Why is my computer so slow?
 # There are many possible reasons. Here are some of them:
@@ -52,13 +53,13 @@ $ free -m
 $ top
 
 > delete all files in my system
-# You should not do this. This is a dangerous command. It will delete all files in your system.
-# If you are sure you want to do this, run the following command:
+# 🚨 WARNING This is a dangerous command. It will delete all files in your system, including the operating system itself.
+# If you know exactly the consequences, run the following command:
 $ # rm -rf /*
 # If you want to delete all files in a specific directory, run the following command:
 $ # rm -rf /path/to/directory/*
 
-> I started ./main.sh and it keeps loading. How can I stop it?
+> I started ./main.sh and its frozen. How can I stop it?
 # Press Ctrl+C to stop the script.
 
 > {{input}}
