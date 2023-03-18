@@ -1,7 +1,8 @@
 
 //--- Import dependencies.
 const rc = require('rc')
-const dotenv = require('dotenv').config()
+// force dotenv to load the .env file in the current directory
+const dotenv = require('dotenv').config({ path: __dirname + '/../.env' })
 const defaults = require('lodash/defaults')
 const { name: appName } = require('../package.json');
 
@@ -9,7 +10,7 @@ const { name: appName } = require('../package.json');
 const defaultOptions = {
     secret: null,
     engineId: 'code-davinci-002',
-    max_tokens: 300,
+    max_tokens: 500,
     temperature: 0.0,
     top_p: undefined,
     n: undefined,
