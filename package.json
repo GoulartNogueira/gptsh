@@ -1,6 +1,6 @@
 {
   "name": "gpterminal",
-  "version": "2.2.0 ",
+  "version": "2.2.0",
   "description": "GPTerminal is a CLI tool built with NodeJs, based on GPT.sh and powered by Open AI's GPT-3. It allows you to get help from GPT directly in your terminal.",
   "homepage": "https://github.com/goulartnogueira/gptsh#readme",
   "bin": {
