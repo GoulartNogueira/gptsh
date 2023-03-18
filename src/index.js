@@ -6,6 +6,7 @@ const { hideBin } = require('yargs/helpers')
 const complete = require('./complete')
 const buildConfig = require('./buildConfig')
 const buildPrompt = require('./buildPrompt')
+const execa = require('execa')
 
 //--- Parse argv arguments using 'yargs' package.
 const argv = yargs(hideBin(process.argv))
@@ -118,13 +119,12 @@ function askRunCommand(command) {
 	)()
 }
 
-function runCommand(command) {
-	const { exec } = require('child_process')
-	exec(command, (err, stdout, stderr) => {
-		if (err) {
-			console.error(err)
-			return
-		}
-		console.log(stdout)
-	})
+async function runCommand(command) {
+	// Run the command using 'execa' package.
+	try {
+		await execa.execaCommand(command, {stdio: 'inherit' })
+	}
+	catch (err) {
+		console.error(err.message)
+	}
 }
