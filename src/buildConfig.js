@@ -9,7 +9,7 @@ const { name: appName } = require('../package.json');
 //--- Build the default options.
 const defaultOptions = {
     secret: null,
-    engineId: 'code-davinci-002',
+    engineId: 'gpt-3.5-turbo',
     max_tokens: 500,
     temperature: 0.0,
     top_p: undefined,

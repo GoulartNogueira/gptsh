@@ -44,13 +44,33 @@ const prompt = buildPrompt(argv._.join(' '), appConfig)
 
 //--- Compute the appropriate shell command and output it.
 complete(prompt, appConfig).then(outputs => {
+	// {
+	// 	"id": "chatcmpl-123",
+	// 	"object": "chat.completion",
+	// 	"created": 1677652288,
+	// 	"choices": [{
+	// 	  "index": 0,
+	// 	  "message": {
+	// 		"role": "assistant",
+	// 		"content": "\n\nHello there, how may I assist you today?",
+	// 	  },
+	// 	  "finish_reason": "stop"
+	// 	}],
+	// 	"usage": {
+	// 	  "prompt_tokens": 9,
+	// 	  "completion_tokens": 12,
+	// 	  "total_tokens": 21
+	// 	}
+	//   }
+	  
 	// Check if the output is undefined.
 	if (outputs === undefined) {
 		console.error('No output was returned.')
 		process.exit(1)
 	}
+	console.log(outputs.usage)
 	// replace '$ ' if it is at the beginning of a line
-	let result = outputs[0].replace(/^\$ /gm, '')
+	let result = outputs.choices[0].message.content.replace(/^\$ /gm, '')
 	// remove the last line, if it is empty
 	if (result.endsWith('\n')) {
 		result = result.slice(0, -1)

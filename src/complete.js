@@ -6,7 +6,7 @@ const axios = require('axios')
 
 //--- Create an axios instance to query to.
 const openai = axios.create({
-	baseURL: 'https://api.openai.com/v1',
+	baseURL: 'https://api.openai.com/v1/chat/completions',
 	headers: { 'Content-Type': 'application/json' }
 })
 
@@ -25,8 +25,32 @@ module.exports = async (prompt, config = {}) => {
 	openai.defaults.headers.common['Authorization'] = `Bearer ${secret}`
 
 	//--- Query the GPT-3 API.
-	return await openai.post(`/engines/${engineId}/completions`, { prompt, ...options })
-		.then(res => map(res.data.choices, 'text'))
+	return await openai.post('', {
+		model: engineId,
+		messages: [{"role": "user", "content": prompt}],
+		})
+		// {
+		// 	"id": "chatcmpl-123",
+		// 	"object": "chat.completion",
+		// 	"created": 1677652288,
+		// 	"choices": [{
+		// 	  "index": 0,
+		// 	  "message": {
+		// 		"role": "assistant",
+		// 		"content": "\n\nHello there, how may I assist you today?",
+		// 	  },
+		// 	  "finish_reason": "stop"
+		// 	}],
+		// 	"usage": {
+		// 	  "prompt_tokens": 9,
+		// 	  "completion_tokens": 12,
+		// 	  "total_tokens": 21
+		// 	}
+		//   }		  
+		.then(res => {
+			console.log(res.data)
+			return res.data
+		})
 		.catch(err => {
 			if (err?.response?.data?.error) {
 				//   code: 'invalid_api_key'
